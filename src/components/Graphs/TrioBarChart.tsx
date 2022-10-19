@@ -2,15 +2,15 @@ import 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
 import { theme } from '../../theme/theme';
-// import { BarProps } from './BarChart.model';
+import { BarInterface, BarProps } from './TrioBarChart.model';
 
-export const TrioBarChart = ({ monthData, labels, label, legendStatus = false}: any): JSX.Element => {
+export const TrioBarChart = ({ monthData, legendStatus = false}: BarProps): JSX.Element => {
   
   const getArtilleryValue = (monthData: RussianArmyTechnics) => Object.values(monthData.artillery);
   const getArtilleryNames= (monthData: RussianArmyTechnics) =>Object.keys(monthData.artillery);
-  const getMonthName = (monthData: RussianArmyTechnics) => (Object.values(monthData.monthName)).toString();
+  const getMonthName = (monthData: RussianArmyTechnics) => monthData.monthName;
 
-    const getBarChartDataset = {
+    const getBarChartDataset: BarInterface = {
       labels: getArtilleryNames(monthData[0]),
       datasets: [
         {

@@ -11,9 +11,9 @@ export const theme = createTheme({
       main: '#FFD700',
     },
     chartColor: {
-      light: '#7DE2D1',
-      main: '#339989',
-      dark: '#2B2C28',
+      light: '#FE4A49',
+      main: '#2AB7CA',
+      dark: '#FED766',
       contrastText: '#121213',
     },
     neutral: {

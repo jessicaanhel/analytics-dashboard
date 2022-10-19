@@ -49,4 +49,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 The project presents data on the losses of Russian artillery for 3 selected months. (source: Ministry of Defense of Ukraine https://www.mil.gov.ua/)
 
-Created 2 types of charts. On the HomePage you can create new graph visualizations by adding the required arguments. The order of events does not matter, the charts sort the data when received.
+Created 2 types of charts. On the HomePage you can create new graph visualizations by adding the required arguments.
