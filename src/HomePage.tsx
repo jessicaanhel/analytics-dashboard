@@ -7,15 +7,14 @@ import { septemberLosses, octoberLosses, augustLosses} from './helpers/mockedDB/
 
 
 export const HomePage = (): JSX.Element => {
-
   return (
     <Box p={5}>
         <Grid container spacing={4}>
           <Grid item xs={5}>
-            <TrioBarChart monthData={[octoberLosses, septemberLosses, augustLosses]} legendStatus = {true} />
+            <TrioBarChart monthData={[augustLosses, septemberLosses, octoberLosses]} legendStatus = {true} />
           </Grid>
           <Grid item xs={5}>
-            <LineChart monthData={[octoberLosses, septemberLosses, augustLosses]} label="Loss of personnel"/>
+            <LineChart monthData={[augustLosses, septemberLosses, octoberLosses]} label="Loss of personnel"/>
           </Grid>
         </Grid>
     </Box>

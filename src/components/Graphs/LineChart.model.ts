@@ -1,16 +1,17 @@
 import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
-export interface BarInterface {
+
+export interface LineChartInterface {
   labels: string[];
   datasets: {
     label: string;
-    backgroundColor: string[];
     borderColor: string[];
-    borderWidth: number;
     data: number[];
     fill: boolean;
+    tension: number;
   }[];
 }
-export interface BarProps {
+export interface LineChartProps {
   monthData: RussianArmyTechnics[];
+  label: string;
   legendStatus?: boolean;
 }
