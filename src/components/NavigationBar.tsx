@@ -4,8 +4,8 @@ import { theme } from '../theme/theme';
 
 const NavigationBar = () : JSX.Element => {
   const pageLinks = [
-    { label: 'React', path: '/' },
-    { label: 'Home', path: '/home' },
+    { label: 'Home', path: '/' },
+    { label: 'ReactCopy', path: '/react'}
   ];
   const location = useLocation();
 
