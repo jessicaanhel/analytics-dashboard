@@ -25,4 +25,4 @@ yarn-error.log*
 
 .env
 .idea
-src/apis/bitquery/*
+src/apis/bitquery/orders.py

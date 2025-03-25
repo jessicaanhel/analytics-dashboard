@@ -6,25 +6,27 @@ import os
 
 dotenv.load_dotenv()
 
+#Inputs:
+COINBASE_TOKEN_ID = "pepe"
+token_contract_address = "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+
 ETHERSCAN_API = "https://api.etherscan.io/api"
 ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
-
 COINGECKO_API = "https://api.coingecko.com/api/v3/simple/price"
 
-TOKEN_ID = "pepe"
-etherscan_contract_address = "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
-
-
 EXCHANGE_ADDRESSES = {
-    "Binance": ["0x1234...abcd", "0x5678...efgh"],  # Replace with real addresses
+    "Binance": ["0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE", "0x001866Ae5B3de6cAa5a51543FD9fB64f524F5478",
+                "0x28C6c06298d514Db089934071355E5743bf21d60", ],
     "Bybit": ["0x9876...dcba"],
-    "Coinbase": ["0xabcdef1234567890abcdef1234567890abcdef12"]
+    "Coinbase": ["0xabcdef1234567890abcdef1234567890abcdef12"],
+    "Kraken": ["iisdfj...sdfj"],
+    "Bitfinex": ["0xabc...f1234567890abcdef12"],
 }
 
 def get_coin_price_in_usd():
-    response = requests.get(COINGECKO_API, params={'ids': TOKEN_ID, 'vs_currencies': 'usd'})
+    response = requests.get(COINGECKO_API, params={'ids': COINBASE_TOKEN_ID, 'vs_currencies': 'usd'})
     data = response.json()
-    return data[TOKEN_ID]['usd']
+    return data[COINBASE_TOKEN_ID]['usd']
 
 def get_exchange_label(address):
     """Check if the address belongs to a known exchange and return the label."""
@@ -39,7 +41,7 @@ print(f"Current Pepe Price: {coin_price_usd} USD")
 params = {
     "module": "account",
     "action": "tokentx",
-    "contractaddress": etherscan_contract_address,
+    "contractaddress": token_contract_address,
     "startblock": 0,
     "endblock": 99999999,
     "sort": "desc",
@@ -67,7 +69,7 @@ if data["status"] == "1":
         formated_price = "{:,}".format(value_in_usd).replace(",", " ")
 
         transaction_time = timestamp_to_datetime(tx['timeStamp'])
-        if value_in_usd > 5000:  # > 500,000 USD
+        if value_in_usd > 5:  # > 500,000 USD
             exchange_label = get_exchange_label(tx['to'])
 
             print(f"*{tx['tokenSymbol']}* in ETH chain (USD {formated_price}) Transaction Hash: {tx['hash']}")
