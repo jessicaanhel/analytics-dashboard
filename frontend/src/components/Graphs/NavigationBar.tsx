@@ -1,6 +1,6 @@
 import { Box, List, ListItem } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import { theme } from '../theme/theme';
+import { theme } from '../../theme/theme';
 
 const NavigationBar = () : JSX.Element => {
   const pageLinks = [
