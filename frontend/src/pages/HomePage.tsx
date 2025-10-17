@@ -10,10 +10,13 @@ import { septemberLosses, octoberLosses, augustLosses} from '../helpers/mockedDB
 
 
 export const HomePage = (): JSX.Element => {
+
+    // TODO:
 //     const openFilterOverlay = () => setFilterBar(true);
 //     const closeFilterOverlay = () => setFilterBar(false);
 //   const [openFilterBar, setFilterBar] = useState(false);
 //      <FilterHeader isOpen={openFilterBar} onClose={closeFilterOverlay} />
+
     return (
         <Box p={5}>
           <BlackRockHoldings />
