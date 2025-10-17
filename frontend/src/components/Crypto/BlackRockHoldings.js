@@ -30,10 +30,12 @@ const BlackRockHoldings = () => {
           },
         ]}
         layout={{
-          title: "Total Value of BlackRock Holdings (Billions USD)",
-          yaxis: { title: "Billion USD" },
-          plot_bgcolor: "#fafafa",
-          paper_bgcolor: "#fafafa",
+          paper_bgcolor: "#0d0d0d",
+          plot_bgcolor: "#0d0d0d",
+          font: { color: "#00ffcc" },
+          title: "Total Value of BlackRock Holdings",
+          yaxis: { title: "Billion USD", color: "#00ffcc" },
+          xaxis: { color: "#00ffcc" },
         }}
         style={{ width: "80%", margin: "auto" }}
       />
