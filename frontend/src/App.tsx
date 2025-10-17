@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './components/Graphs/NavigationBar';
 
 // Pages
 import HomePage from './pages/HomePage';
 import SmartMoneyActual from './pages/CryptoData/SmartMoneyActual';
-import AutoTab2 from './pages/CryptoData/AutoTab2';
-import AutoTab3 from './pages/CryptoData/AutoTab3';
 import AnalyticsTab1 from './pages/Analytics/AnalyticsTab1';
 import AnalyticsTab2 from './pages/Analytics/AnalyticsTab2';
-import AnalyticsTab3 from './pages/Analytics/AnalyticsTab3';
-import CustomTab1 from './pages/Custom/CustomTab1';
-import CustomTab2 from './pages/Custom/CustomTab2';
-import CustomTab3 from './pages/Custom/CustomTab3';
-
-
-
 
 const TABS = {
-  CryptoData: ["Smart Money || Actual", "Auto Tab 2", "Auto Tab 3"],
-  Analytics: ["Analytics Tab 1", "Analytics Tab 2", "Analytics Tab 3"],
-  Custom: ["Custom Tab 1", "Custom Tab 2", "Custom Tab 3"],
+  CryptoData: ["Smart Money || Actual"],
+  Analytics: ["Website Metrics Overview", "Chart.js Example"],
+//   Custom: ["Custom Tab 1", "Custom Tab 2", "Custom Tab 3"],
 };
 
 function App() {
@@ -33,64 +24,39 @@ function App() {
         return <HomePage />;
 
       // * Crypto *
-      case "Crypto - Smart Money Up to Date":
+      case "CryptoData - Smart Money || Actual":
         return <SmartMoneyActual />;
-      case "Automation - Auto Tab 2":
-        return <AutoTab2 />;
-      case "Automation - Auto Tab 3":
-        return <AutoTab3 />;
 
       // * Analytics *
-      case "Analytics - Analytics Tab 1":
+      case "Analytics - Website Metrics Overview":
         return <AnalyticsTab1 />;
-      case "Analytics - Analytics Tab 2":
+      case "Analytics - Chart.js Example":
         return <AnalyticsTab2 />;
-      case "Analytics - Analytics Tab 3":
-        return <AnalyticsTab3 />;
-
-      // * Custom *
-      case "Custom - Custom Tab 1":
-        return <CustomTab1 />;
-      case "Custom - Custom Tab 2":
-        return <CustomTab2 />;
-      case "Custom - Custom Tab 3":
-        return <CustomTab3 />;
 
       default:
         return <div>Unknown tab</div>;
     }
   };
-
-  return (
-    <div style={{ display: "flex", height: "100vh", fontFamily: "Arial, sans-serif" }}>
+    return (
+      <div style={{ display: "flex", height: "100vh", fontFamily: "Roboto, sans-serif" }}>
       {/* * Main content * */}
-      <main style={{ flexGrow: 1, padding: 20, overflowY: "auto" }}>
-        {renderContent()}
-      </main>
+      <main className="main-content">{renderContent()}</main>
 
       {/*  Sidebar  */}
-      <aside style={{ width: 250, borderLeft: "1px solid #ccc", padding: 20, backgroundColor: "#fafafa" }}>
-        <h2 style={{ cursor: "pointer" }} onClick={() => setActiveTab("Overview")}>
-          Overview
-        </h2>
+      <aside className="sidebar">
+        <h2 onClick={() => setActiveTab("Overview")}>Overview</h2>
 
         {Object.entries(TABS).map(([topic, tabs]) => (
           <div key={topic} style={{ marginTop: 20 }}>
             <h3>{topic}</h3>
             {tabs.map((tab) => {
               const tabLabel = `${topic} - ${tab}`;
+
               return (
                 <div
                   key={tab}
                   onClick={() => setActiveTab(tabLabel)}
-                  style={{
-                    cursor: "pointer",
-                    padding: 5,
-                    fontWeight: activeTab === tabLabel ? "bold" : "normal",
-                    backgroundColor: activeTab === tabLabel ? "#ddd" : "transparent",
-                    borderRadius: 3,
-                    marginBottom: 3,
-                  }}
+                  className={`tab ${activeTab === tabLabel ? "active" : ""}`}
                 >
                   {tab}
                 </div>
