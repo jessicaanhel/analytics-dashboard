@@ -1,14 +1,18 @@
-# Getting Started with Create React App
+# Getting Started with Analytical Dashboard CROCO digital
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Run the Project
 
-In the project directory, you can run:
+1. Install requirements:
+`
+pip3 install -r backend/requirements.txt
+frontend/npm install
+`
+2. In the project directory, run:
 
 ### `python backend/app.py`
 
-Runs backend of application in python 3.13
+Runs backend of application in python 3.13.\
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view in the browser.
 
 ### `frontend/npm start`
@@ -16,8 +20,10 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view in the
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
+3. The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+## Available Scripts
 
 ### `frontend/npm test`
 
