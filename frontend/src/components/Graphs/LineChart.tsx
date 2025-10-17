@@ -1,48 +1,36 @@
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
-import { theme } from '../../theme/theme';
+import { neonTheme } from '../../theme/neonChartTheme';
 import { LineChartInterface, LineChartProps } from './LineChart.model';
-// import { BarProps } from './BarChart.model';
 
-export const LineChart = ({monthData, label, legendStatus= false }: LineChartProps): JSX.Element => {
-  
-  const getPersonnelValue = (monthData: RussianArmyTechnics) => Object.values(monthData.personnel);
-  const getMonthName = (monthData: RussianArmyTechnics) => monthData.monthName;
-  
-  let personnelNumber = []
-  for (let i=0; i< monthData.length; i++) {
-    personnelNumber.push(Number(getPersonnelValue(monthData[i])));
-}
+export const LineChart = ({ monthData, label, legendStatus = false }: LineChartProps): JSX.Element => {
+  const personnelNumber: number[] = monthData.map(m => Number(Object.values(m.personnel)));
+  const monthName: string[] = monthData.map(m => m.monthName);
 
-  let monthName = []
-  for (let i=0; i< monthData.length; i++) {
-    monthName.push((getMonthName(monthData[i])).toString());
-  }
-
-  const getLineChartDataset: LineChartInterface = {
+  const dataset: LineChartInterface = {
     labels: monthName,
     datasets: [
       {
-      label,
-      data: personnelNumber,
-      borderColor: [theme.palette.chartColor.main],
-      fill: false,
-      tension: 0.4
-    }
+        label,
+        data: personnelNumber,
+        borderColor: [neonTheme.colors.cyan],
+        backgroundColor: [neonTheme.colors.cyan],
+        fill: false,
+        tension: 0.4,
+        pointBackgroundColor: neonTheme.colors.cyan,
+        pointBorderColor: neonTheme.colors.cyan,
+        pointHoverRadius: 6,
+      },
     ],
   };
 
-    return (
-      <Line
-        data={getLineChartDataset}
-        options={{
-          plugins: {
-            legend: {
-              display: legendStatus,
-            },
-          },
-        }}
-      />
-  );
+  const options = {
+    ...neonTheme.options,
+    plugins: {
+      ...neonTheme.options.plugins,
+      legend: { display: legendStatus },
+    },
+  };
+
+  return <Line data={dataset} options={options} />;
 };
