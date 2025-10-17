@@ -18,9 +18,11 @@
     "chart.js": "^3.9.1",
     "eslint": "^8.25.0",
     "nth-check": "^2.1.1",
+    "plotly.js": "^3.1.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
+    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
@@ -52,6 +54,10 @@
     ]
   },
   "devDependencies": {
+    "@types/plotly.js": "^3.0.7",
+    "lightweight-charts": "^5.0.9",
+    "npm": "^11.6.2",
     "prettier": "2.7.1"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
