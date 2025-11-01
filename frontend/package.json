@@ -56,9 +56,13 @@
   "devDependencies": {
     "@types/plotly.js": "^3.0.7",
     "@types/react-plotly.js": "^2.6.3",
+    "@types/styled-components": "^5.1.35",
+    "autoprefixer": "^10.4.21",
     "lightweight-charts": "^5.0.9",
     "npm": "^11.6.2",
-    "prettier": "2.7.1"
+    "postcss": "^8.5.6",
+    "prettier": "2.7.1",
+    "tailwindcss": "^4.1.16"
   },
   "proxy": "http://localhost:5000"
 }
