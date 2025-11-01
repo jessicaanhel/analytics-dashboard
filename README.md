@@ -8,17 +8,13 @@
 pip3 install -r backend/requirements.txt
 frontend/npm install
 `
-2. In the project directory, run:
+2. To run development server, run:
 
-### `python backend/app.py`
+### ` ./run.sh`
 
-Runs backend of application in python 3.13.\
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view in the browser.
-
-### `frontend/npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs backend of application in python 3.13 and frontend in developmend mode.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view backend data in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view Dashboard in the browser.
 
 3. The page will reload if you make edits.\
 You will also see any lint errors in the console.

@@ -3,6 +3,10 @@ from flask_cors import CORS
 import requests
 import datetime
 
+from scrapers.millenium import get_millennium_rates
+from scrapers.privatbank import get_privat24_rates
+from scrapers.velobank import get_velobank_rates
+
 app = Flask(__name__)
 CORS(app)
 @app.route('/api/overview/')
@@ -48,7 +52,7 @@ def automation_tab3():
     return jsonify({"data": "CryptoData Tab 3 details"})
 
 
-# --- Analytics Tabs ---
+# --- Analitics Tabs ---
 @app.route('/api/analytics/analyticstab1/')
 def analytics_tab1():
     return jsonify({"data": "Analytics Tab 1 details"})
@@ -62,18 +66,29 @@ def analytics_tab3():
     return jsonify({"data": "Analytics Tab 3 details"})
 
 
-# --- Custom Tabs ---
-@app.route('/api/custom/customtab1/')
-def custom_tab1():
-    return jsonify({"data": "Custom Tab 1 details"})
 
+# --- Fiat Currencies ---
+@app.route("/refresh", methods=["GET"])
+def refresh_rates():
+    #polish banks
+    millenium_actual_rates = get_millennium_rates()
+    velobank_actual_rates = get_velobank_rates()
+
+    #ukrainian banks TODO: pumb_actual_rates
+    privatbank_actual_rates = get_privat24_rates()
+
+    return jsonify({
+        "Millenium": millenium_actual_rates,
+        "VeloBank": velobank_actual_rates,
+        "PrivatBank": privatbank_actual_rates,
+    })
 @app.route('/api/custom/customtab2/')
 def custom_tab2():
-    return jsonify({"data": "Custom Tab 2 details"})
+    return jsonify({"data": "Fiat Tab 2 details"})
 
 @app.route('/api/custom/customtab3/')
 def custom_tab3():
-    return jsonify({"data": "Custom Tab 3 details"})
+    return jsonify({"data": "Fiat Tab 3 details"})
 
 
 if __name__ == "__main__":
