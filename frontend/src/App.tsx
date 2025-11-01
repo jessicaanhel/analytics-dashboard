@@ -8,11 +8,12 @@ import HomePage from './pages/HomePage';
 import SmartMoneyActual from './pages/CryptoData/SmartMoneyActual';
 import AnalyticsTab1 from './pages/Analytics/AnalyticsTab1';
 import AnalyticsTab2 from './pages/Analytics/AnalyticsTab2';
+import CurrencyRates from './pages/Fiat/CurrencyRates';
 
 const TABS = {
   CryptoData: ["Smart Money || Actual"],
   Analytics: ["Website Metrics Overview", "Chart.js Example"],
-//   Custom: ["Custom Tab 1", "Custom Tab 2", "Custom Tab 3"],
+  Fiat: ["Actual Currency Rate"],
 };
 
 function App() {
@@ -32,6 +33,11 @@ function App() {
         return <AnalyticsTab1 />;
       case "Analytics - Chart.js Example":
         return <AnalyticsTab2 />;
+
+      // * Fiat *
+      case "Fiat - Actual Currency Rate":
+        return <CurrencyRates />;
+
 
       default:
         return <div>Unknown tab</div>;
