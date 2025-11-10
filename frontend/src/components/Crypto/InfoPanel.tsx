@@ -4,7 +4,7 @@ import { InfoPanelProps } from './InfoPanel.model';
 const Panel = styled.div<{ colorKey: InfoPanelProps['color'] }>`
   border: 2px solid ${({ colorKey, theme }) => theme.palette[colorKey].main};
   color: ${({ colorKey, theme }) => theme.palette[colorKey].main};
-  box-shadow: ${({ colorKey, theme }) => theme.palette[colorKey].glow};
+  box-shadow: ${({ colorKey, theme }) => theme.palette.glow[colorKey]};
   padding: 12px 16px;
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
@@ -12,7 +12,7 @@ const Panel = styled.div<{ colorKey: InfoPanelProps['color'] }>`
 
   &:hover {
     box-shadow: ${({ colorKey, theme }) =>
-      theme.palette[colorKey].glow.replace(/10px/g, '15px')};
+      theme.palette.glow[colorKey].replace(/10px/g, '15px')};
     transform: translateY(-2px);
   }
 `;
@@ -25,6 +25,5 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ title, value, color }) => 
     </Panel>
   );
 };
-
 
 export default InfoPanel;
