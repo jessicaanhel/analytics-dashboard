@@ -9,7 +9,6 @@ const mockData2 = [5, 9, 14, 12, 8, 10];
 const mockData3 = [8, 12, 11, 9, 14, 16];
 const mockData4 = [20, 22, 18, 25, 24, 23];
 const mockData5 = [15, 18, 16, 19, 17, 20];
-const mockData6 = [7, 9, 6, 8, 10, 11];
 
 const chartLayout = {
   paper_bgcolor: "#0d0d0d",
@@ -21,7 +20,7 @@ const chartLayout = {
 const AnalyticsTab1 = () => {
   return (
     <Box p={3}>
-      <h1 style={{ color: "#00ffcc", textShadow: "0 0 2px #00ffcc, 0 0 4px #00ffcc" }}>
+      <h1>
         Website Metrics Overview
       </h1>
 

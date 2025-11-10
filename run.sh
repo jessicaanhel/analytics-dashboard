@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Run backend in background
-python3 backend/app.py
-
-# Run frontend
+# Run concurrently
 cd frontend
-npm start
+npm run dev

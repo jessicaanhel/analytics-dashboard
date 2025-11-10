@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavigationBar from './components/Graphs/NavigationBar';
+import React, { useState } from 'react';
+import { layoutStyles } from "./App.styles";
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -38,41 +36,47 @@ function App() {
       case "Fiat - Actual Currency Rate":
         return <CurrencyRates />;
 
-
       default:
         return <div>Unknown tab</div>;
     }
   };
-    return (
-      <div style={{ display: "flex", height: "100vh", fontFamily: "Roboto, sans-serif" }}>
-      {/* * Main content * */}
-      <main className="main-content">{renderContent()}</main>
 
-      {/*  Sidebar  */}
-      <aside className="sidebar">
-        <h2 onClick={() => setActiveTab("Overview")}>Overview</h2>
+  return (
+  <div style={layoutStyles.container}>
+    {/* Sidebar */}
+    <aside style={layoutStyles.sidebar}>
+      <h2
+        onClick={() => setActiveTab("Overview")}
+        style={{ cursor: "pointer" }}
+      >
+        Overview
+      </h2>
 
-        {Object.entries(TABS).map(([topic, tabs]) => (
-          <div key={topic} style={{ marginTop: 20 }}>
-            <h3>{topic}</h3>
-            {tabs.map((tab) => {
-              const tabLabel = `${topic} - ${tab}`;
+      {Object.entries(TABS).map(([topic, tabs]) => (
+        <div key={topic} style={{ marginTop: 20 }}>
+          <h3>{topic}</h3>
+          {tabs.map((tab) => {
+            const tabLabel = `${topic} - ${tab}`;
+            return (
+              <div
+                key={tab}
+                onClick={() => setActiveTab(tabLabel)}
+                style={
+                  activeTab === tabLabel ? layoutStyles.activeTab : layoutStyles.tab
+                }
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </aside>
 
-              return (
-                <div
-                  key={tab}
-                  onClick={() => setActiveTab(tabLabel)}
-                  className={`tab ${activeTab === tabLabel ? "active" : ""}`}
-                >
-                  {tab}
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </aside>
-    </div>
-  );
+    {/* Main content */}
+    <main style={layoutStyles.main}>{renderContent()}</main>
+  </div>
+);
 }
 
 export default App;
