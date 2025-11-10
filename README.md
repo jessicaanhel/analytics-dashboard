@@ -35,15 +35,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-##
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-# About Project
-
-The project presents data on the losses of Russian artillery for 3 selected months. (source: Ministry of Defense of Ukraine https://www.mil.gov.ua/)
-
-Created 2 types of charts. On the HomePage you can create new graph visualizations by adding the required arguments.
