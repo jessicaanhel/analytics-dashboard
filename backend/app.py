@@ -3,12 +3,18 @@ from flask_cors import CORS
 import requests
 import datetime
 
+from apis.coingeco import get_bitcoin_metrics, get_blackrock_savings
 from scrapers.millenium import get_millennium_rates
 from scrapers.privatbank import get_privat24_rates
 from scrapers.velobank import get_velobank_rates
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route("/")
+def home():
+    return jsonify({"message": "API is running"})
+
 @app.route('/api/overview/')
 def overview():
     return jsonify({
@@ -20,28 +26,31 @@ def overview():
     })
 
 # --- CryptoData Tabs ---
+
+@app.get("/api/test_btc")
+def test_btc():
+    data = get_bitcoin_metrics(days=2)
+    print("DEBUG BTC DATA:", data)
+    return jsonify(data)
+
 @app.route("/api/blackrock")
-def api_holdings():
-    # Actual prices from CoinGecko
-    price_data = requests.get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
-    ).json()
-    btc_price = price_data["bitcoin"]["usd"]
-    eth_price = price_data["ethereum"]["usd"]
+def blackrock_savings():
+    try:
+        blackrock_savings = get_blackrock_savings()
+        return jsonify(blackrock_savings)
+    except Exception as e:
+        print(f"[WARN] Failed to fetch: {e}")
+        return []
 
-    # mocked blackRock - later Arkham
-    btc_holdings = 25000
-    eth_holdings = 150000
+@app.route("/api/bitcoin_market_cap")
+def bitcoin_metrics():
+    try:
+        data = get_bitcoin_metrics()
+        return jsonify(data)
+    except Exception as e:
+        print(f"[WARN] Failed to fetch: {e}")
+        return []
 
-    return jsonify({
-        "timestamp": datetime.datetime.utcnow().isoformat(),
-        "btc_holdings": btc_holdings,
-        "eth_holdings": eth_holdings,
-        "btc_price_usd": btc_price,
-        "eth_price_usd": eth_price,
-        "btc_value_usd": btc_holdings * btc_price,
-        "eth_value_usd": eth_holdings * eth_price,
-    })
 
 @app.route('/api/automation/autotab2/')
 def automation_tab2():

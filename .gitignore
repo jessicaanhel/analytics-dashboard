@@ -22,6 +22,8 @@ frontend/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*/__pycache__/
+backend/apis/__pycache__/*
 
 .env
 .idea
