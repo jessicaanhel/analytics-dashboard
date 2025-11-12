@@ -2,10 +2,10 @@ import React from "react";
 import Plot from "react-plotly.js";
 import { useApi } from "../../hooks/useApi";
 
-const BlackRockHoldings = () => {
+export const BlackRockHoldings = () => {
   const { data, loading, error } = useApi("/api/blackrock");
 
-  if (loading) return <p style={{ textAlign: "center" }}>Loading data...</p>;
+  if (loading) return <p style={{ textAlign: "center" }}>Loa§   1awz`ding data...</p>;
   if (error || !data) return <p style={{ textAlign: "center" }}>Failed to load data</p>;
 
   const btcValue = data.btc_value_usd / 1e9;
