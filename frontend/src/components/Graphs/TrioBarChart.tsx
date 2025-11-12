@@ -1,31 +1,34 @@
 import 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
 import { neonTheme } from '../../theme/neonChartTheme';
 import { BarInterface, BarProps } from './TrioBarChart.model';
 
-export const TrioBarChart = ({ monthData, legendStatus = false }: BarProps): JSX.Element => {
+export const TrioBarChart = ({ timeData, legendStatus = false }: BarProps): JSX.Element => {
   const neonColors = [neonTheme.colors.cyan, neonTheme.colors.pink, neonTheme.colors.yellow];
   const neonBorder = neonTheme.colors.border;
 
-  const getArtilleryValue = (month: RussianArmyTechnics) => Object.values(month.artillery);
-  const getArtilleryNames = (month: RussianArmyTechnics) => Object.keys(month.artillery);
+  const labels = timeData.map(d => d.label);
+  const dataValues = timeData.map(d => d.value);
 
-  const getBarChartDataset: BarInterface = {
-    labels: getArtilleryNames(monthData[0]),
-    datasets: monthData.map((month, idx) => ({
-      label: month.monthName,
-      data: getArtilleryValue(month),
-      backgroundColor: new Array(getArtilleryValue(month).length).fill(neonColors[idx]),
-      borderColor: new Array(getArtilleryValue(month).length).fill(neonBorder),
-      borderWidth: 0.1,
+  const datasets = [
+    {
+      label: 'Value',
+      data: dataValues,
+      backgroundColor: neonColors.slice(0, dataValues.length),
+      borderColor: new Array(dataValues.length).fill(neonBorder),
+      borderWidth: 1,
       fill: false,
-    })),
+    },
+  ];
+
+  const barChartData: BarInterface = {
+    labels,
+    datasets,
   };
 
   return (
     <Bar
-      data={getBarChartDataset}
+      data={barChartData}
       options={{
         indexAxis: 'y',
         scales: neonTheme.options.scales,

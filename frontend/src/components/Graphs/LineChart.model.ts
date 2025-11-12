@@ -1,22 +1,38 @@
-import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
+export interface DatasetConfig {
+  label: string;
+  data: number[];
+  borderColor: string | string[];
+  backgroundColor?: string | string[];
+  fill: boolean;
+  tension: number;
+  pointBackgroundColor?: string;
+  pointBorderColor?: string;
+  pointHoverRadius?: number;
+}
 
 export interface LineChartInterface {
   labels: string[];
-  datasets: {
-      label: string;
-      data: number[];
-      borderColor: string[];
-      fill: boolean;
-      tension: number;
-      backgroundColor?: string[];
-      pointBackgroundColor?: string;
-      pointBorderColor?: string;
-      pointHoverRadius?: number;
-      }[];
+  datasets: DatasetConfig[];
+}
+
+export interface TimePointEntry {
+  timeLabel: string;
+  values: number[];
 }
 
 export interface LineChartProps {
-  monthData: RussianArmyTechnics[];
-  label: string;
-  legendStatus?: boolean;
+    endpoint: string;
+    labels: string[];
+    legendStatus?: boolean;
 }
+
+export interface UseAPiDataProps {
+    data: { timeLabel: string; values: number[] }[]
+}
+
+export interface LineChartWithApiProps extends Omit<LineChartProps, "timeData"> {
+  endpoint: string;
+}
+
+import { ChartOptions, InteractionMode } from "chart.js";
+

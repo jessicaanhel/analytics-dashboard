@@ -1,4 +1,3 @@
-import { RussianArmyTechnics } from '../../helpers/mockedDB/mockedDB.models';
 export interface BarInterface {
   labels: string[];
   datasets: {
@@ -10,7 +9,14 @@ export interface BarInterface {
     fill: boolean;
   }[];
 }
+
+
+export interface BarDataPoint {
+  label: string; // Label for each bar
+  value: number; // Value for the bar
+}
+
 export interface BarProps {
-  monthData: RussianArmyTechnics[];
+  timeData: BarDataPoint[];
   legendStatus?: boolean;
 }
