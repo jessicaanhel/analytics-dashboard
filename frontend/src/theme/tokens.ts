@@ -10,7 +10,6 @@ export const COLORS = {
   accent: '#5b7fff',
   accentSoft: 'rgba(91,127,255,0.16)',
   accentText: '#dfe6ff',
-  brandGradient: 'linear-gradient(135deg,#5b7fff,#8f6bff)',
   positive: '#34d1a1',
   negative: '#ff6b6b',
   large: '#a98bff',

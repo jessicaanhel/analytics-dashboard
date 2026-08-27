@@ -35,4 +35,5 @@ def get_last_large_trades(take_coin, make_coin, large_amount=1000):
         print(f"Error: {response.status_code}")
 
 
-get_last_large_trades(taker, maker)
+if __name__ == "__main__":
+    get_last_large_trades(taker, maker)

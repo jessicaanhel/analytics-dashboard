@@ -1,3 +1,13 @@
+import math
+
+INSTITUTIONS = {
+    "blackrock": {
+        "name": "BlackRock",
+        "btc_holdings": 25000,
+        "eth_holdings": 150000,
+    },
+}
+
 OVERVIEW_KPIS = {
     "net_smart_money_flow_24h": 149_000_000,
     "exchange_netflow_24h": 148_000_000,
@@ -188,3 +198,17 @@ WATCHLIST = [
     {"id": 3, "asset": "SOL", "condition": "Smart Flow Score below 60", "armed": False},
     {"id": 4, "asset": "WIF", "condition": "Price below $1.50", "armed": True},
 ]
+
+
+def synthetic_price_series(current_price, num_days):
+    prices = []
+    for i in range(num_days):
+        progress = i / max(num_days - 1, 1)
+        wave = (
+            math.sin(progress * 2 * math.pi * 1.5) * 0.05
+            + math.sin(progress * 2 * math.pi * 0.5) * 0.03
+        )
+        drift = -0.08 * (1 - progress)
+        prices.append(current_price * (1 + wave + drift))
+    prices[-1] = current_price
+    return prices

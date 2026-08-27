@@ -1,9 +1,10 @@
 import React from 'react';
 import { useApi } from '../hooks/useApi';
 import { Card } from '../components/UI/Card';
-import { Pill } from '../components/UI/Pill';
 import { thStyle, tdStyle } from '../components/UI/table';
 import { BlackRockHoldings } from '../components/Crypto/BlackRockHoldings';
+import { WhaleTransfersCard } from '../components/SmartMoney/WhaleTransfersCard';
+import { ExchangeFlowsCard } from '../components/SmartMoney/ExchangeFlowsCard';
 import { COLORS, changeColor } from '../theme/tokens';
 import { formatUsdMillions, formatPercent, formatCompactNumber } from '../utils/format';
 
@@ -18,25 +19,6 @@ interface InstitutionalFlows {
   pct_freed_fair: number;
   new_investors: number;
   btc_flow: number;
-}
-
-interface WhaleTransfer {
-  asset: string;
-  qty_label: string;
-  usd: number;
-  direction: 'Inflow' | 'Outflow';
-  route: string;
-  time_label: string;
-}
-
-interface WhaleTransfersResponse {
-  threshold_usd: number;
-  transfers: WhaleTransfer[];
-}
-
-interface ExchangeFlow {
-  exchange: string;
-  value_musd: number;
 }
 
 interface Future {
@@ -74,14 +56,9 @@ const KpiCard: React.FC<{ label: string; value: string; color?: string }> = ({
 export const Overview: React.FC = () => {
   const { data: kpis } = useApi<OverviewKpis>('/api/overview');
   const { data: institutional } = useApi<InstitutionalFlows>('/api/smart-money/institutional');
-  const { data: whaleData } = useApi<WhaleTransfersResponse>('/api/smart-money/whale-transfers');
-  const { data: exchangeFlows } = useApi<ExchangeFlow[]>('/api/smart-money/exchange-flows');
   const { data: futures } = useApi<Future[]>('/api/smart-money/futures');
   const { data: etfFlows } = useApi<EtfFlow[]>('/api/smart-money/etf-flows');
 
-  const maxExchangeAbs = exchangeFlows
-    ? Math.max(...exchangeFlows.map((f) => Math.abs(f.value_musd)))
-    : 1;
   const maxEtfAbs = etfFlows ? Math.max(...etfFlows.map((f) => Math.abs(f.value_musd))) : 1;
 
   return (
@@ -175,97 +152,8 @@ export const Overview: React.FC = () => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 16, marginBottom: 16 }}>
-        <Card>
-          <div
-            style={{
-              fontFamily: "'Manrope', sans-serif",
-              fontWeight: 600,
-              fontSize: 16,
-              marginBottom: 8,
-            }}
-          >
-            Whale wallet transfers
-          </div>
-          {whaleData?.transfers.map((w, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '12px 0',
-                borderBottom: `1px solid ${COLORS.borderSubtle}`,
-              }}
-            >
-              <Pill
-                background={COLORS.pillMutedBg}
-                color={COLORS.pillMutedText}
-                style={{ width: 54, textAlign: 'center' }}
-              >
-                {w.asset}
-              </Pill>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13 }}>{w.route}</div>
-                <div style={{ fontSize: 11, color: COLORS.textMuted }}>
-                  {w.qty_label} · {w.time_label}
-                </div>
-              </div>
-              {w.usd >= whaleData.threshold_usd && (
-                <Pill background={COLORS.largeBg} color={COLORS.large} style={{ fontSize: 10 }}>
-                  LARGE
-                </Pill>
-              )}
-              <span
-                style={{
-                  fontFamily: "'Manrope', sans-serif",
-                  fontWeight: 600,
-                  color: w.direction === 'Inflow' ? COLORS.positive : COLORS.negative,
-                  width: 80,
-                  textAlign: 'right',
-                }}
-              >
-                {formatUsdMillions(w.direction === 'Inflow' ? w.usd : -w.usd)}
-              </span>
-            </div>
-          ))}
-        </Card>
-
-        <Card>
-          <div
-            style={{
-              fontFamily: "'Manrope', sans-serif",
-              fontWeight: 600,
-              fontSize: 16,
-              marginBottom: 16,
-            }}
-          >
-            Exchange in/outflow
-          </div>
-          {exchangeFlows?.map((f) => {
-            const color = changeColor(f.value_musd);
-            const width = `${Math.min(100, (Math.abs(f.value_musd) / maxExchangeAbs) * 100)}%`;
-            return (
-              <div key={f.exchange} style={{ marginBottom: 14 }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: 12,
-                    marginBottom: 6,
-                  }}
-                >
-                  <span>{f.exchange}</span>
-                  <span style={{ color, fontFamily: "'Manrope', sans-serif" }}>
-                    {(f.value_musd >= 0 ? '+$' : '-$') + Math.abs(f.value_musd) + 'M'}
-                  </span>
-                </div>
-                <div style={{ height: 6, background: COLORS.pillMutedBg, borderRadius: 99 }}>
-                  <div style={{ height: '100%', width, background: color, borderRadius: 99 }} />
-                </div>
-              </div>
-            );
-          })}
-        </Card>
+        <WhaleTransfersCard />
+        <ExchangeFlowsCard />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
