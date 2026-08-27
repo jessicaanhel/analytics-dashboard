@@ -1,10 +1,9 @@
 import requests
 
+
 def get_millennium_rates():
-    url = "https://portal.api.bankmillennium.pl/bm/app/portal/views/public/fxrates/getFxRates?language=pl"
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+    url = "https://portal.api.bankmillennium.pl/bm/app/portal/views/public/fxrates/getFxRates?language=pl"  # noqa: E501
+    headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     data = response.json()
@@ -23,6 +22,7 @@ def get_millennium_rates():
     rates["PLN"] = {"buy": "1.0", "sell": "1.0"}
 
     return rates
+
 
 if __name__ == "__main__":
     rates = get_millennium_rates()

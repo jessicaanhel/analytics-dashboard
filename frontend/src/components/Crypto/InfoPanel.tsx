@@ -11,8 +11,7 @@ const Panel = styled.div<{ colorKey: InfoPanelProps['color'] }>`
   background-color: transparent;
 
   &:hover {
-    box-shadow: ${({ colorKey, theme }) =>
-      theme.palette.glow[colorKey].replace(/10px/g, '15px')};
+    box-shadow: ${({ colorKey, theme }) => theme.palette.glow[colorKey].replace(/10px/g, '15px')};
     transform: translateY(-2px);
   }
 `;

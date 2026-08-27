@@ -1,5 +1,7 @@
-import requests
 from datetime import datetime
+
+import requests
+
 
 def get_privat24_rates():
     # Get today's date in dd.mm.yyyy format
@@ -18,14 +20,12 @@ def get_privat24_rates():
         if ccy in wanted:
             buy = rate.get("purchaseRateNB") or rate.get("purchaseRate")
             sell = rate.get("saleRateNB") or rate.get("saleRate")
-            rates[ccy] = {
-                "buy": str(buy),
-                "sell": str(sell)
-            }
+            rates[ccy] = {"buy": str(buy), "sell": str(sell)}
 
     rates["UAH"] = {"buy": "1.0", "sell": "1.0"}
 
     return rates
+
 
 if __name__ == "__main__":
     print(get_privat24_rates())
