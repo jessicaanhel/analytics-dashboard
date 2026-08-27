@@ -3,7 +3,7 @@ import Plot from "react-plotly.js";
 import { useApi } from "../../hooks/useApi";
 
 const BlackRockHoldings = () => {
-  const { data, loading, error } = useApi("/api/blackrock"); // API relative path with proxy
+  const { data, loading, error } = useApi("/api/blackrock");
 
   if (loading) return <p style={{ textAlign: "center" }}>Loading data...</p>;
   if (error || !data) return <p style={{ textAlign: "center" }}>Failed to load data</p>;
