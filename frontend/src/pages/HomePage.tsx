@@ -1,11 +1,11 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { LineChart } from './components/Graphs/LineChart';
-import { TrioBarChart } from './components/Graphs/TrioBarChart';
-import BlackRockHoldings from './components/Crypto/BlackRockHoldings';
-import { FilterHeader } from './components/Filtering/FilterHeader';
+import { LineChart } from '../components/Graphs/LineChart';
+import { TrioBarChart } from '../components/Graphs/TrioBarChart';
+import BlackRockHoldings from '../components/Crypto/BlackRockHoldings';
+import { FilterHeader } from '../components/Filtering/FilterHeader';
 
-import { septemberLosses, octoberLosses, augustLosses} from './helpers/mockedDB/mockedDB';
+import { septemberLosses, octoberLosses, augustLosses} from '../helpers/mockedDB/mockedDB';
 
 
 
