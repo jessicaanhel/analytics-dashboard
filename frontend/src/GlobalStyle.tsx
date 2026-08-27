@@ -1,10 +1,12 @@
-import { Global, css } from "@emotion/react";
-import { theme } from "./theme/theme";
+import { Global, css } from '@emotion/react';
+import { theme } from './theme/theme';
 
 export const GlobalStyle = () => (
   <Global
     styles={css`
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
       body {

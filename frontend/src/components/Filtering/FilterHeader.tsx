@@ -4,7 +4,7 @@ import { theme } from '../../theme/theme';
 // import { SelectArtillery } from '../FilteringCheckbox/SelectCity';
 import { FilterHeaderProps } from './FilterHeader.model';
 
-export const FilterHeader = ({ onClose, isOpen }: FilterHeaderProps) : JSX.Element=> {
+export const FilterHeader = ({ onClose, isOpen }: FilterHeaderProps): JSX.Element => {
   return (
     <Drawer anchor="right" open={isOpen}>
       <Stack p={3} rowGap={2}>

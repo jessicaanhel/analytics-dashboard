@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import '../App.css';
 
-export const ReactPage = () : JSX.Element=> {
+export const ReactPage = (): JSX.Element => {
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +21,6 @@ export const ReactPage = () : JSX.Element=> {
       </header>
     </div>
   );
-}
+};
 
 export default ReactPage;

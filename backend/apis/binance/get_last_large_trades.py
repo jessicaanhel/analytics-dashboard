@@ -3,13 +3,14 @@ from datetime import datetime
 import requests
 
 taker = "BTC"
-maker = 'USDT'
+maker = "USDT"
 quinety = 1000000
 
 BINANCE_API_URL = "https://api.binance.com/api/v3/trades"
 
-def get_last_large_trades(take_coin, make_coin , large_amount=1000):
-    symbol = take_coin+make_coin
+
+def get_last_large_trades(take_coin, make_coin, large_amount=1000):
+    symbol = take_coin + make_coin
     print(symbol)
     url = "https://api.binance.com/api/v3/trades"
     params = {"symbol": symbol, "limit": 100}
@@ -21,12 +22,14 @@ def get_last_large_trades(take_coin, make_coin , large_amount=1000):
             # print(trade)
             price = float(trade["price"])
             qty = float(trade["qty"])
-            trade_operation = '*SOLD*' if trade['isBuyerMaker'] else '*BOUGHT*'
-            timestamp = trade['time'] / 1000  # Convert to seconds
-            trade_time = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+            trade_operation = "*SOLD*" if trade["isBuyerMaker"] else "*BOUGHT*"
+            timestamp = trade["time"] / 1000  # Convert to seconds
+            trade_time = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S")
             value_usd = price * qty
             if value_usd > large_amount:
-                print(f"{trade_operation}: {qty} {symbol}({value_usd} USD) in {price} USD. Timestamp: {trade_time}")
+                print(
+                    f"{trade_operation}: {qty} {symbol}({value_usd} USD) in {price} USD. Timestamp: {trade_time}"  # noqa: E501
+                )
 
     else:
         print(f"Error: {response.status_code}")

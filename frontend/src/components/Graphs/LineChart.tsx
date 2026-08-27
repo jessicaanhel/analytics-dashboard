@@ -3,9 +3,13 @@ import { Line } from 'react-chartjs-2';
 import { neonTheme } from '../../theme/neonChartTheme';
 import { LineChartInterface, LineChartProps } from './LineChart.model';
 
-export const LineChart = ({ monthData, label, legendStatus = false }: LineChartProps): JSX.Element => {
-  const personnelNumber: number[] = monthData.map(m => Number(Object.values(m.personnel)));
-  const monthName: string[] = monthData.map(m => m.monthName);
+export const LineChart = ({
+  monthData,
+  label,
+  legendStatus = false,
+}: LineChartProps): JSX.Element => {
+  const personnelNumber: number[] = monthData.map((m) => Number(Object.values(m.personnel)));
+  const monthName: string[] = monthData.map((m) => m.monthName);
 
   const dataset: LineChartInterface = {
     labels: monthName,

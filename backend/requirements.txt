@@ -1,4 +1,10 @@
+# pre-commit tools
+black==26.5.1
+isort==9.0.0
+flake8==7.3.0
+pre-commit==4.6.2
+# main tools
 flask==3.1.2
 flask-cors==6.0.1
 requests==2.32.5
-beautifulsoup4==-4.14.2
+beautifulsoup4==4.14.2

@@ -1,10 +1,9 @@
-import React from "react";
-import { CurrencyTableProps } from "./CurrencyTable.model";
+import React from 'react';
+import { CurrencyTableProps } from './CurrencyTable.model';
 import { theme } from '../../theme/theme';
 
 const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
   const primaryColor = theme.palette.primary.main;
-  const accentColor = theme.palette.secondary.main;
   const bgColor = theme.palette.common.black;
 
   if (!data) return null;
@@ -13,8 +12,8 @@ const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
     new Set(
       Object.values(data)
         .flatMap((rates) => Object.keys(rates))
-        .sort()
-    )
+        .sort(),
+    ),
   );
 
   const cellStyle = {
@@ -37,7 +36,9 @@ const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
         <tr>
           <th style={cellStyle}>Bank</th>
           {allCurrencies.map((currency) => (
-            <th key={currency} colSpan={2} style={cellStyle}>{currency}</th>
+            <th key={currency} colSpan={2} style={cellStyle}>
+              {currency}
+            </th>
           ))}
         </tr>
         <tr>
