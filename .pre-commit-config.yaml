@@ -1,0 +1,53 @@
+# Run `pre-commit install` once (after `pip install -r backend/requirements.txt`)
+# to run these checks locally on every commit.
+# Run `pre-commit autoupdate` occasionally to bump hook versions.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+
+  # --- Python (backend) ---
+  - repo: https://github.com/psf/black
+    rev: "26.5.1"
+    hooks:
+      - id: black
+        files: ^backend/
+        args: ["--config", "backend/pyproject.toml"]
+
+  - repo: https://github.com/pycqa/isort
+    rev: "9.0.0"
+    hooks:
+      - id: isort
+        files: ^backend/
+        args: ["--settings-path", "backend/pyproject.toml"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: "7.3.0"
+    hooks:
+      - id: flake8
+        files: ^backend/
+        args: ["--config", "backend/.flake8"]
+
+  # --- Frontend formatting (ESLint already runs as part of the CRA build/test step in CI) ---
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v2.7.1"
+    hooks:
+      - id: prettier
+        files: ^frontend/src/.*\.(js|jsx|ts|tsx|css|json)$
+        args: ["--config", "frontend/.prettierrc.json"]
+
+  # --- Guard against package.json / package-lock.json drift (breaks `npm ci` in CI) ---
+  - repo: local
+    hooks:
+      - id: npm-lockfile-sync
+        name: frontend package-lock.json in sync with package.json
+        entry: bash -c 'cd frontend && npm ci --dry-run'
+        language: system
+        files: ^frontend/package(-lock)?\.json$
+        pass_filenames: false

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export const useApi = (endpoint: string) => {
   const [data, setData] = useState<any>(null);
@@ -9,14 +9,14 @@ export const useApi = (endpoint: string) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const API_URL = process.env.REACT_APP_API_URL || ""; // fallback to empty
+        const API_URL = process.env.REACT_APP_API_URL || ''; // fallback to empty
         const res = await fetch(`${API_URL}${endpoint}`);
-        if (!res.ok) throw new Error("Network response was not ok");
+        if (!res.ok) throw new Error('Network response was not ok');
         const json = await res.json();
         setData(json);
         setError(null);
       } catch (err) {
-        setError("Failed to load data");
+        setError('Failed to load data');
       } finally {
         setLoading(false);
       }
