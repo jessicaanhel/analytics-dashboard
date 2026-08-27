@@ -5,4 +5,3 @@ export interface CurrencyTableProps {
       sell: number | string
       }>>;
 }
-export {};
