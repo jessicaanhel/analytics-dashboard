@@ -42,5 +42,3 @@ export const InstitutionFilter: React.FC<InstitutionFilterProps> = ({
     })}
   </div>
 );
-
-export default InstitutionFilter;

@@ -1,28 +1,39 @@
 import React from 'react';
 import { useApi } from '../../hooks/useApi';
 import { Card } from '../UI/Card';
+import { DataSourceTag } from '../UI/DataSourceTag';
 import { COLORS, changeColor } from '../../theme/tokens';
+import { DataSourceFilterValue, matchesDataSourceFilter } from '../../utils/dataSource';
 
 interface ExchangeFlow {
   exchange: string;
   value_musd: number;
 }
 
-export const ExchangeFlowsCard: React.FC = () => {
-  const { data } = useApi<ExchangeFlow[]>('/api/smart-money/exchange-flows');
+interface ExchangeFlowsCardProps {
+  filter?: DataSourceFilterValue;
+}
+
+export const ExchangeFlowsCard: React.FC<ExchangeFlowsCardProps> = ({ filter = 'all' }) => {
+  const { data, source } = useApi<ExchangeFlow[]>('/api/smart-money/exchange-flows');
   const maxAbs = data ? Math.max(...data.map((f) => Math.abs(f.value_musd))) : 1;
+
+  if (!matchesDataSourceFilter(source, filter)) return null;
 
   return (
     <Card>
       <div
         style={{
-          fontFamily: "'Manrope', sans-serif",
-          fontWeight: 600,
-          fontSize: 16,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginBottom: 16,
         }}
       >
-        Exchange in/outflow
+        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: 16 }}>
+          Exchange in/outflow
+        </div>
+        <DataSourceTag source={source} />
       </div>
       {data?.map((f) => {
         const color = changeColor(f.value_musd);
@@ -51,5 +62,3 @@ export const ExchangeFlowsCard: React.FC = () => {
     </Card>
   );
 };
-
-export default ExchangeFlowsCard;

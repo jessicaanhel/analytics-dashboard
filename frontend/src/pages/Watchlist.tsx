@@ -3,6 +3,7 @@ import { useApi } from '../hooks/useApi';
 import { apiFetch } from '../utils/api';
 import { Card } from '../components/UI/Card';
 import { Pill } from '../components/UI/Pill';
+import { DataSourceTag } from '../components/UI/DataSourceTag';
 import { COLORS } from '../theme/tokens';
 
 interface Alert {
@@ -13,7 +14,7 @@ interface Alert {
 }
 
 export const Watchlist: React.FC = () => {
-  const { data } = useApi<Alert[]>('/api/watchlist');
+  const { data, source } = useApi<Alert[]>('/api/watchlist');
   const [alerts, setAlerts] = useState<Alert[]>([]);
 
   useEffect(() => {
@@ -37,8 +38,18 @@ export const Watchlist: React.FC = () => {
           marginBottom: 14,
         }}
       >
-        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: 16 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontFamily: "'Manrope', sans-serif",
+            fontWeight: 600,
+            fontSize: 16,
+          }}
+        >
           Alerts
+          <DataSourceTag source={source} />
         </div>
         <button
           style={{

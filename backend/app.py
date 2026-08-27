@@ -4,7 +4,7 @@ from flask_cors import CORS
 from api import register_blueprints
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, expose_headers=["X-Data-Source"])
 register_blueprints(app)
 
 if __name__ == "__main__":

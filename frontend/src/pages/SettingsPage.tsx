@@ -2,6 +2,7 @@ import React from 'react';
 import { useApi } from '../hooks/useApi';
 import { Card } from '../components/UI/Card';
 import { Pill } from '../components/UI/Pill';
+import { DataSourceTag } from '../components/UI/DataSourceTag';
 import { COLORS } from '../theme/tokens';
 
 interface Connection {
@@ -11,12 +12,15 @@ interface Connection {
 }
 
 export const SettingsPage: React.FC = () => {
-  const { data } = useApi<Connection[]>('/api/settings/connections');
+  const { data, source } = useApi<Connection[]>('/api/settings/connections');
 
   return (
     <div style={{ maxWidth: 680 }}>
       <div
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
           fontFamily: "'Manrope', sans-serif",
           fontWeight: 600,
           fontSize: 16,
@@ -24,6 +28,7 @@ export const SettingsPage: React.FC = () => {
         }}
       >
         Connected sources
+        <DataSourceTag source={source} />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 16 }}>
         {data?.map((c) => {

@@ -2,8 +2,10 @@ import React from 'react';
 import { useApi } from '../../hooks/useApi';
 import { Card } from '../UI/Card';
 import { Pill } from '../UI/Pill';
+import { DataSourceTag } from '../UI/DataSourceTag';
 import { COLORS } from '../../theme/tokens';
 import { formatUsdMillions } from '../../utils/format';
+import { DataSourceFilterValue, matchesDataSourceFilter } from '../../utils/dataSource';
 
 interface WhaleTransfer {
   asset: string;
@@ -19,20 +21,29 @@ interface WhaleTransfersResponse {
   transfers: WhaleTransfer[];
 }
 
-export const WhaleTransfersCard: React.FC = () => {
-  const { data } = useApi<WhaleTransfersResponse>('/api/smart-money/whale-transfers');
+interface WhaleTransfersCardProps {
+  filter?: DataSourceFilterValue;
+}
+
+export const WhaleTransfersCard: React.FC<WhaleTransfersCardProps> = ({ filter = 'all' }) => {
+  const { data, source } = useApi<WhaleTransfersResponse>('/api/smart-money/whale-transfers');
+
+  if (!matchesDataSourceFilter(source, filter)) return null;
 
   return (
     <Card>
       <div
         style={{
-          fontFamily: "'Manrope', sans-serif",
-          fontWeight: 600,
-          fontSize: 16,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginBottom: 8,
         }}
       >
-        Whale wallet transfers
+        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: 16 }}>
+          Whale wallet transfers
+        </div>
+        <DataSourceTag source={source} />
       </div>
       {data?.transfers.map((w, i) => (
         <div
@@ -79,5 +90,3 @@ export const WhaleTransfersCard: React.FC = () => {
     </Card>
   );
 };
-
-export default WhaleTransfersCard;

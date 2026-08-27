@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApi } from '../hooks/useApi';
 import { Card } from '../components/UI/Card';
+import { DataSourceTag } from '../components/UI/DataSourceTag';
 import { COLORS, RADIUS, changeColor } from '../theme/tokens';
 import { formatSignedUsd } from '../utils/format';
 
@@ -44,7 +45,7 @@ export const PersonalPnl: React.FC = () => {
   const [email, setEmail] = useState('');
   const [loginError, setLoginError] = useState('');
 
-  const { data } = useApi<PersonalPnlResponse>('/api/personal-pnl', { enabled: loggedIn });
+  const { data, source } = useApi<PersonalPnlResponse>('/api/personal-pnl', { enabled: loggedIn });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,8 +137,18 @@ export const PersonalPnl: React.FC = () => {
       </div>
 
       <Card style={{ marginBottom: 20, maxWidth: 340, padding: 22 }}>
-        <div style={{ fontSize: 12, color: COLORS.textLabel, marginBottom: 8 }}>
-          Total PnL — 30D, all platforms
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 8,
+          }}
+        >
+          <div style={{ fontSize: 12, color: COLORS.textLabel }}>
+            Total PnL — 30D, all platforms
+          </div>
+          <DataSourceTag source={source} />
         </div>
         <div
           style={{
