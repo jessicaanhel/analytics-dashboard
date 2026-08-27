@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 
-export const useApi = (endpoint: string) => {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+export const useApi = <T = any,>(endpoint: string, options: { enabled?: boolean } = {}) => {
+  const { enabled = true } = options;
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(enabled);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!enabled) return;
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const API_URL = process.env.REACT_APP_API_URL || ''; // fallback to empty
-        const res = await fetch(`${API_URL}${endpoint}`);
+        const res = await apiFetch(endpoint);
         if (!res.ok) throw new Error('Network response was not ok');
         const json = await res.json();
         setData(json);
@@ -23,7 +26,7 @@ export const useApi = (endpoint: string) => {
     };
 
     fetchData();
-  }, [endpoint]);
+  }, [endpoint, enabled]);
 
   return { data, loading, error };
 };
