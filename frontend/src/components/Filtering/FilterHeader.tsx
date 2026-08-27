@@ -17,7 +17,7 @@ export const FilterHeader = ({ onClose, isOpen }: FilterHeaderProps) : JSX.Eleme
           </Stack>
         </Stack>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Button variant="text" sx={{ color: theme.palette.grey[400], pl: 0 }}>
+          <Button variant="text" sx={{ color: theme.palette.info.main, pl: 0 }}>
             Clear all
           </Button>
           <button className="neon-button">Search</button>
