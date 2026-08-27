@@ -1,11 +1,21 @@
 import React from 'react';
-import { CurrencyTableProps } from './CurrencyTable.model';
-import { theme } from '../../theme/theme';
+import { thStyle, tdStyle } from '../UI/table';
+import { COLORS } from '../../theme/tokens';
+
+export interface CurrencyTableProps {
+  data: Record<
+    string,
+    Record<
+      string,
+      {
+        buy: number | string;
+        sell: number | string;
+      }
+    >
+  >;
+}
 
 const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
-  const primaryColor = theme.palette.primary.main;
-  const bgColor = theme.palette.common.black;
-
   if (!data) return null;
 
   const allCurrencies = Array.from(
@@ -16,37 +26,25 @@ const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
     ),
   );
 
-  const cellStyle = {
-    border: `1px solid ${primaryColor}`,
-    padding: '8px',
-    textAlign: 'center' as const,
-    color: primaryColor,
-    textShadow: `0 0 5px ${primaryColor}, 0 0 10px ${primaryColor}`,
-  };
-
-  const missingCellStyle = {
-    ...cellStyle,
-    color: '#555',
-    textShadow: 'none',
-  };
+  const missingCellStyle = { ...tdStyle, color: COLORS.textMuted };
 
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: bgColor }}>
+    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
       <thead>
         <tr>
-          <th style={cellStyle}>Bank</th>
+          <th style={thStyle}>Bank</th>
           {allCurrencies.map((currency) => (
-            <th key={currency} colSpan={2} style={cellStyle}>
+            <th key={currency} colSpan={2} style={thStyle}>
               {currency}
             </th>
           ))}
         </tr>
         <tr>
-          <th style={cellStyle}></th>
+          <th style={thStyle}></th>
           {allCurrencies.map((currency) => (
             <React.Fragment key={`${currency}-headers`}>
-              <th style={cellStyle}>Buy</th>
-              <th style={cellStyle}>Sell</th>
+              <th style={thStyle}>Buy</th>
+              <th style={thStyle}>Sell</th>
             </React.Fragment>
           ))}
         </tr>
@@ -54,13 +52,15 @@ const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
       <tbody>
         {Object.entries(data).map(([bank, rates]) => (
           <tr key={bank}>
-            <td style={cellStyle}>{bank}</td>
+            <td style={tdStyle}>
+              <strong>{bank}</strong>
+            </td>
             {allCurrencies.map((currency) => {
               const rate = rates ? rates[currency] : undefined;
               return rate ? (
                 <React.Fragment key={`${bank}-${currency}`}>
-                  <td style={cellStyle}>{rate.buy}</td>
-                  <td style={cellStyle}>{rate.sell}</td>
+                  <td style={tdStyle}>{rate.buy}</td>
+                  <td style={tdStyle}>{rate.sell}</td>
                 </React.Fragment>
               ) : (
                 <React.Fragment key={`${bank}-${currency}`}>
