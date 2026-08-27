@@ -54,8 +54,6 @@ def _run_safely(app, fn):
 
 
 def start_scheduler(app):
-    # Flask's debug reloader spawns a watchdog process that also imports app.py;
-    # only the actual worker process should run background jobs.
     if app.debug and os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         return None
 

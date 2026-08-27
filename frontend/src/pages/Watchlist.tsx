@@ -15,7 +15,6 @@ interface Alert {
   armed: boolean;
 }
 
-// Keep in sync with backend/services/live_data.py's COINGECKO_IDS keys.
 const ASSET_OPTIONS = ['BTC', 'ETH', 'SOL', 'PEPE', 'WIF'];
 
 const inputStyle: React.CSSProperties = {
