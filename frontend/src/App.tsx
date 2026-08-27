@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { DashboardLayout } from './components/Layout/DashboardLayout';
 import Overview from './pages/Overview';
+import SmartMoney from './pages/SmartMoney';
 import CryptoMarkets from './pages/CryptoMarkets';
 import FiatRates from './pages/FiatRates';
 import PersonalPnl from './pages/PersonalPnl';
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route element={<DashboardLayout />}>
         <Route path="/" element={<Overview />} />
+        <Route path="/smart-money" element={<SmartMoney />} />
         <Route path="/crypto" element={<CryptoMarkets />} />
         <Route path="/fiat" element={<FiatRates />} />
         <Route path="/personal-pnl" element={<PersonalPnl />} />

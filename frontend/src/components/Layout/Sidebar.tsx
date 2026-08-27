@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { COLORS } from '../../theme/tokens';
+import logo from '../../assets/logo.png';
 
 interface NavItem {
   to: string;
@@ -24,6 +25,17 @@ const NAV_ITEMS: NavItem[] = [
     icon: (
       <svg {...iconProps}>
         <path d="M3 12h4l2.5 7L13 4l2.5 8H21" />
+      </svg>
+    ),
+  },
+  {
+    to: '/smart-money',
+    label: 'Smart Money',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M5 6l7-3 7 3" />
+        <path d="M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" />
+        <path d="M3 10h18M3 21h18" />
       </svg>
     ),
   },
@@ -96,32 +108,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
     }}
   >
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 24px' }}>
-      <div
+      <img
+        src={logo}
+        alt="BrownBro"
         style={{
           width: 32,
           height: 32,
           borderRadius: 10,
-          background: COLORS.brandGradient,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          objectFit: 'cover',
           flexShrink: 0,
         }}
-      >
-        <svg
-          width={16}
-          height={16}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={COLORS.background}
-          strokeWidth={2}
-        >
-          <path d="M3 12h4l2.5 7L13 4l2.5 8H21" />
-        </svg>
-      </div>
+      />
       {!collapsed && (
         <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 18 }}>
-          Flowdesk
+          BrownBro
         </span>
       )}
     </div>

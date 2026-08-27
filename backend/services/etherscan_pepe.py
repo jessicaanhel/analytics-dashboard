@@ -43,47 +43,51 @@ def get_exchange_label(address):
     return "Unknown"
 
 
-coin_price_usd = get_coin_price_in_usd()
-print(f"Current Pepe Price: {coin_price_usd} USD")
-
-params = {
-    "module": "account",
-    "action": "tokentx",
-    "contractaddress": token_contract_address,
-    "startblock": 0,
-    "endblock": 99999999,
-    "sort": "desc",
-    "apikey": ETHERSCAN_API_KEY,
-}
-
-
 def timestamp_to_datetime(timestamp):
     """Convert Unix timestamp to human-readable datetime."""
     return datetime.utcfromtimestamp(int(timestamp)).strftime("%Y-%m-%d %H:%M:%S")
 
 
-response = requests.get(ETHERSCAN_API, params=params)
-data = response.json()
+def main():
+    coin_price_usd = get_coin_price_in_usd()
+    print(f"Current Pepe Price: {coin_price_usd} USD")
 
-if data["status"] == "1":
-    transactions = data["result"]
+    params = {
+        "module": "account",
+        "action": "tokentx",
+        "contractaddress": token_contract_address,
+        "startblock": 0,
+        "endblock": 99999999,
+        "sort": "desc",
+        "apikey": ETHERSCAN_API_KEY,
+    }
 
-    top_10_transactions = transactions[:10]
+    response = requests.get(ETHERSCAN_API, params=params)
+    data = response.json()
 
-    for tx in top_10_transactions:
-        value_in_wei = int(tx["value"])
-        value_in_pepe = value_in_wei / 10**18
-        value_in_usd = value_in_pepe * coin_price_usd
-        formated_price = "{:,}".format(value_in_usd).replace(",", " ")
+    if data["status"] == "1":
+        transactions = data["result"]
 
-        transaction_time = timestamp_to_datetime(tx["timeStamp"])
-        if value_in_usd > 5:  # > 500,000 USD
-            exchange_label = get_exchange_label(tx["to"])
+        top_10_transactions = transactions[:10]
 
-            print(
-                f"*{tx['tokenSymbol']}* in ETH chain (USD {formated_price}) Transaction Hash: {tx['hash']}"  # noqa: E501
-            )
-            print(f"From: {tx['from']}")
-            print(f"To: {tx['to']} (Public Name: {exchange_label})")
-            print(f"Date and Time: {transaction_time}")
-            print("=" * 50)
+        for tx in top_10_transactions:
+            value_in_wei = int(tx["value"])
+            value_in_pepe = value_in_wei / 10**18
+            value_in_usd = value_in_pepe * coin_price_usd
+            formated_price = "{:,}".format(value_in_usd).replace(",", " ")
+
+            transaction_time = timestamp_to_datetime(tx["timeStamp"])
+            if value_in_usd > 5:  # > 500,000 USD
+                exchange_label = get_exchange_label(tx["to"])
+
+                print(
+                    f"*{tx['tokenSymbol']}* in ETH chain (USD {formated_price}) Transaction Hash: {tx['hash']}"  # noqa: E501
+                )
+                print(f"From: {tx['from']}")
+                print(f"To: {tx['to']} (Public Name: {exchange_label})")
+                print(f"Date and Time: {transaction_time}")
+                print("=" * 50)
+
+
+if __name__ == "__main__":
+    main()
