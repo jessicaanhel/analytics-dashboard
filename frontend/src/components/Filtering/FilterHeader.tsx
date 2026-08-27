@@ -20,7 +20,7 @@ export const FilterHeader = ({ onClose, isOpen }: FilterHeaderProps) : JSX.Eleme
           <Button variant="text" sx={{ color: theme.palette.grey[400], pl: 0 }}>
             Clear all
           </Button>
-          <Button variant="outlined">Search</Button>
+          <button className="neon-button">Search</button>
         </Stack>
         {/* <SelectArtillery /> */}
       </Stack>
