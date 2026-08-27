@@ -2,6 +2,7 @@
 
 # dependencies
 frontend/node_modules
+node_modules/
 /.pnp
 .pnp.js
 /.prettierrc
@@ -13,6 +14,7 @@ backend/__pycache__/
 backend/venv/
 backend/.venv/
 .venv/
+backend/data/*.db
 
 # testing
 /coverage

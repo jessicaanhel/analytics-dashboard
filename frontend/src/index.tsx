@@ -6,6 +6,7 @@ import { theme } from './theme/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { GlobalStyle } from './GlobalStyle';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -14,7 +15,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,

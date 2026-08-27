@@ -102,6 +102,7 @@ CRYPTO_MARKETS = [
     {
         "symbol": "BTC",
         "name": "Bitcoin",
+        "price": 67420,
         "price_label": "$67,420",
         "change_24h_pct": 2.4,
         "volume_label": "$28.4B",
@@ -111,6 +112,7 @@ CRYPTO_MARKETS = [
     {
         "symbol": "ETH",
         "name": "Ethereum",
+        "price": 3180,
         "price_label": "$3,180",
         "change_24h_pct": -1.1,
         "volume_label": "$14.2B",
@@ -120,6 +122,7 @@ CRYPTO_MARKETS = [
     {
         "symbol": "SOL",
         "name": "Solana",
+        "price": 168.40,
         "price_label": "$168.40",
         "change_24h_pct": 5.8,
         "volume_label": "$3.1B",
@@ -129,6 +132,7 @@ CRYPTO_MARKETS = [
     {
         "symbol": "PEPE",
         "name": "Pepe",
+        "price": 0.0000098,
         "price_label": "$0.0000098",
         "change_24h_pct": 12.3,
         "volume_label": "$410M",
@@ -138,6 +142,7 @@ CRYPTO_MARKETS = [
     {
         "symbol": "WIF",
         "name": "dogwifhat",
+        "price": 1.92,
         "price_label": "$1.92",
         "change_24h_pct": -4.6,
         "volume_label": "$210M",

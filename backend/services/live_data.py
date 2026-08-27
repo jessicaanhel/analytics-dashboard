@@ -158,6 +158,7 @@ def get_crypto_markets():
                 {
                     "symbol": mock_entry["symbol"],
                     "name": coin["name"],
+                    "price": coin["current_price"],
                     "price_label": _format_price(coin["current_price"]),
                     "change_24h_pct": round(coin.get("price_change_percentage_24h") or 0, 1),
                     "volume_label": format_usd_compact(coin["total_volume"]),

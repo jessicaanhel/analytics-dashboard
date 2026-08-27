@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { COLORS } from '../../theme/tokens';
 import logo from '../../assets/logo.png';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavItem {
   to: string;
@@ -95,69 +96,111 @@ interface SidebarProps {
   onToggleCollapsed: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }) => (
-  <div
-    style={{
-      width: collapsed ? 72 : 228,
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '24px 0',
-      flexShrink: 0,
-      borderRight: `1px solid ${COLORS.border}`,
-      transition: 'width 0.15s ease',
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 24px' }}>
-      <img
-        src={logo}
-        alt="BrownBro"
-        style={{
-          width: 32,
-          height: 32,
-          borderRadius: 10,
-          objectFit: 'cover',
-          flexShrink: 0,
-        }}
-      />
-      {!collapsed && (
-        <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 18 }}>
-          BrownBro
-        </span>
-      )}
-    </div>
+export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }) => {
+  const { user, logout, loading } = useAuth();
 
-    {NAV_ITEMS.map((item) => (
-      <NavLink
-        key={item.to}
-        to={item.to}
-        end={item.to === '/'}
-        style={({ isActive }) => ({
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          margin: '2px 12px',
-          padding: collapsed ? '10px 0' : '10px 14px',
-          justifyContent: collapsed ? 'center' : 'flex-start',
-          borderRadius: 12,
-          cursor: 'pointer',
-          fontSize: 14,
-          fontWeight: 600,
-          color: isActive ? COLORS.accentText : COLORS.textSecondary,
-          background: isActive ? COLORS.accentSoft : 'transparent',
-        })}
-      >
-        {item.icon}
-        {!collapsed && <span>{item.label}</span>}
-      </NavLink>
-    ))}
+  return (
+    <div
+      style={{
+        width: collapsed ? 72 : 228,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '24px 0',
+        flexShrink: 0,
+        borderRight: `1px solid ${COLORS.border}`,
+        transition: 'width 0.15s ease',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 24px' }}>
+        <img
+          src={logo}
+          alt="BrownBro"
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 10,
+            objectFit: 'cover',
+            flexShrink: 0,
+          }}
+        />
+        {!collapsed && (
+          <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 18 }}>
+            BrownBro
+          </span>
+        )}
+      </div>
 
-    <div style={{ marginTop: 'auto', padding: '16px 20px 0' }}>
-      <div
-        onClick={onToggleCollapsed}
-        style={{ cursor: 'pointer', fontSize: 12, color: '#5c6270' }}
-      >
-        {collapsed ? '»' : '« Collapse'}
+      {NAV_ITEMS.map((item) => (
+        <NavLink
+          key={item.to}
+          to={item.to}
+          end={item.to === '/'}
+          style={({ isActive }) => ({
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            margin: '2px 12px',
+            padding: collapsed ? '10px 0' : '10px 14px',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            borderRadius: 12,
+            cursor: 'pointer',
+            fontSize: 14,
+            fontWeight: 600,
+            color: isActive ? COLORS.accentText : COLORS.textSecondary,
+            background: isActive ? COLORS.accentSoft : 'transparent',
+          })}
+        >
+          {item.icon}
+          {!collapsed && <span>{item.label}</span>}
+        </NavLink>
+      ))}
+
+      <div style={{ marginTop: 'auto', padding: '16px 20px 0' }}>
+        {!collapsed && user && (
+          <div
+            style={{
+              fontSize: 12,
+              color: COLORS.textMuted,
+              marginBottom: 8,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {user.email}
+          </div>
+        )}
+        {user && (
+          <div
+            onClick={logout}
+            style={{ cursor: 'pointer', fontSize: 12, color: '#5c6270', marginBottom: 8 }}
+          >
+            {collapsed ? '⏻' : 'Log out'}
+          </div>
+        )}
+        {!loading && !user && (
+          <Link
+            to="/login"
+            style={{
+              display: 'block',
+              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 600,
+              color: COLORS.accentText,
+              marginBottom: 8,
+              textDecoration: 'none',
+            }}
+          >
+            {collapsed ? '⏎' : 'Sign in'}
+          </Link>
+        )}
+        <div
+          onClick={onToggleCollapsed}
+          style={{ cursor: 'pointer', fontSize: 12, color: '#5c6270' }}
+        >
+          {collapsed ? '»' : '« Collapse'}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

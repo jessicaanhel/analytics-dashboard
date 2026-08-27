@@ -6,10 +6,12 @@ interface PillProps {
   color: string;
   background: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
-export const Pill: React.FC<PillProps> = ({ children, color, background, style }) => (
+export const Pill: React.FC<PillProps> = ({ children, color, background, style, onClick }) => (
   <span
+    onClick={onClick}
     style={{
       fontSize: 11,
       fontWeight: 600,
