@@ -12,9 +12,9 @@ def get_btc_eth_prices():
             "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd",
             timeout=5,
         ).json()
-        return price_data["bitcoin"]["usd"], price_data["ethereum"]["usd"]
+        return price_data["bitcoin"]["usd"], price_data["ethereum"]["usd"], "live"
 
     try:
         return cached("btc_eth_prices", 60, fetch)
     except (requests.RequestException, KeyError, ValueError):
-        return FALLBACK_BTC_PRICE_USD, FALLBACK_ETH_PRICE_USD
+        return FALLBACK_BTC_PRICE_USD, FALLBACK_ETH_PRICE_USD, "mock"

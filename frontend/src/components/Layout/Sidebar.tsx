@@ -161,5 +161,3 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
     </div>
   </div>
 );
-
-export default Sidebar;

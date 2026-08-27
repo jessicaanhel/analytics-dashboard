@@ -1,7 +1,19 @@
 import React from 'react';
-import { CurrencyTableProps } from './CurrencyTable.model';
 import { thStyle, tdStyle } from '../UI/table';
 import { COLORS } from '../../theme/tokens';
+
+export interface CurrencyTableProps {
+  data: Record<
+    string,
+    Record<
+      string,
+      {
+        buy: number | string;
+        sell: number | string;
+      }
+    >
+  >;
+}
 
 const CurrencyTable: React.FC<CurrencyTableProps> = ({ data }) => {
   if (!data) return null;

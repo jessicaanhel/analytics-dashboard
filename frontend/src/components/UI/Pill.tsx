@@ -24,5 +24,3 @@ export const Pill: React.FC<PillProps> = ({ children, color, background, style }
     {children}
   </span>
 );
-
-export default Pill;

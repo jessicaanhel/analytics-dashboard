@@ -37,5 +37,3 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ value, onCha
     })}
   </div>
 );
-
-export default SegmentedControl;

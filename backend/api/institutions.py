@@ -4,15 +4,15 @@ from flask import Blueprint, jsonify, request
 
 from data import mock_data
 from services.prices import get_btc_eth_prices
+from services.response import data_response
 
 institutions_bp = Blueprint("institutions", __name__)
 
 
 @institutions_bp.route("/api/institutions")
 def institutions():
-    return jsonify(
-        [{"id": key, "name": value["name"]} for key, value in mock_data.INSTITUTIONS.items()]
-    )
+    payload = [{"id": key, "name": value["name"]} for key, value in mock_data.INSTITUTIONS.items()]
+    return data_response(payload, "mock")
 
 
 @institutions_bp.route("/api/institutions/<institution_id>/holdings-history")
@@ -32,7 +32,7 @@ def institution_holdings_history(institution_id):
     else:
         return jsonify({"error": "invalid period"}), 400
 
-    btc_price, eth_price = get_btc_eth_prices()
+    btc_price, eth_price, _price_source = get_btc_eth_prices()
     btc_series = mock_data.synthetic_price_series(btc_price, num_days)
     eth_series = mock_data.synthetic_price_series(eth_price, num_days)
 
@@ -47,4 +47,5 @@ def institution_holdings_history(institution_id):
             }
         )
 
-    return jsonify({"institution": institution["name"], "period": period, "points": points})
+    payload = {"institution": institution["name"], "period": period, "points": points}
+    return data_response(payload, "mock")

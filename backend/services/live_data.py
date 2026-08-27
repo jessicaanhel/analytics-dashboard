@@ -5,6 +5,7 @@ import requests
 
 from data import mock_data
 from services.cache import cached
+from services.response import combine_sources
 
 
 def format_usd_compact(value):
@@ -67,17 +68,18 @@ def get_fiat_pairs():
             change = (latest - prev) / prev * 100 if prev else 0.0
             return {"pair": label, "rate": _format_rate(latest), "change_24h_pct": round(change, 2)}
 
-        return [
+        pairs = [
             pair(eur_rates, eur_dates, "USD", "EUR / USD"),
             pair(usd_rates, usd_dates, "PLN", "USD / PLN"),
             pair(eur_rates, eur_dates, "PLN", "EUR / PLN"),
             pair(usd_rates, usd_dates, "UAH", "USD / UAH"),
         ]
+        return pairs, "live"
 
     try:
         return cached("fiat_pairs", 6 * 3600, fetch)
     except (requests.RequestException, KeyError, IndexError, ValueError):
-        return mock_data.FIAT_PAIRS
+        return mock_data.FIAT_PAIRS, "mock"
 
 
 BINANCE_FUTURES_BASE = "https://fapi.binance.com"
@@ -114,11 +116,11 @@ def get_futures():
         for asset, symbol in FUTURES_SYMBOLS:
             try:
                 data = _fetch_binance_futures(symbol)
-                results.append({"asset": asset, **data})
+                results.append({"asset": asset, **data, "_source": "live"})
             except (requests.RequestException, KeyError, IndexError, ValueError, TypeError):
                 fallback = next(f for f in mock_data.FUTURES if f["asset"] == asset)
-                results.append(fallback)
-        return results
+                results.append({**fallback, "_source": "mock"})
+        return results, combine_sources([r["_source"] for r in results])
 
     return cached("futures", 60, fetch)
 
@@ -150,7 +152,7 @@ def get_crypto_markets():
         for mock_entry in mock_data.CRYPTO_MARKETS:
             coin = by_id.get(COINGECKO_IDS[mock_entry["symbol"]])
             if not coin:
-                results.append(mock_entry)
+                results.append({**mock_entry, "_source": "mock"})
                 continue
             results.append(
                 {
@@ -161,11 +163,12 @@ def get_crypto_markets():
                     "volume_label": format_usd_compact(coin["total_volume"]),
                     "market_cap_label": format_usd_compact(coin["market_cap"]),
                     "smart_flow_score": mock_entry["smart_flow_score"],
+                    "_source": "live",
                 }
             )
-        return results
+        return results, combine_sources([r["_source"] for r in results])
 
     try:
         return cached("crypto_markets", 60, fetch)
     except (requests.RequestException, KeyError, ValueError):
-        return mock_data.CRYPTO_MARKETS
+        return [{**m, "_source": "mock"} for m in mock_data.CRYPTO_MARKETS], "mock"

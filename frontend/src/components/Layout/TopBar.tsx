@@ -63,5 +63,3 @@ export const TopBar: React.FC<TopBarProps> = ({ timeRange, onTimeRangeChange }) 
     </div>
   );
 };
-
-export default TopBar;

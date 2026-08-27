@@ -1,8 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { useApi } from '../../hooks/useApi';
 import { Card } from '../UI/Card';
+import { DataSourceTag } from '../UI/DataSourceTag';
 import { COLORS } from '../../theme/tokens';
 import { formatCompactNumber } from '../../utils/format';
+import { DataSourceFilterValue, matchesDataSourceFilter } from '../../utils/dataSource';
 
 type Period = 'mtd' | '3m' | '1y';
 
@@ -40,11 +42,15 @@ const formatDateShort = (iso: string) =>
 
 interface HoldingsHistoryChartProps {
   institutionId: string;
+  filter?: DataSourceFilterValue;
 }
 
-export const HoldingsHistoryChart: React.FC<HoldingsHistoryChartProps> = ({ institutionId }) => {
+export const HoldingsHistoryChart: React.FC<HoldingsHistoryChartProps> = ({
+  institutionId,
+  filter = 'all',
+}) => {
   const [period, setPeriod] = useState<Period>('mtd');
-  const { data } = useApi<HistoryResponse>(
+  const { data, source } = useApi<HistoryResponse>(
     `/api/institutions/${institutionId}/holdings-history?period=${period}`,
   );
   const svgRef = useRef<SVGSVGElement>(null);
@@ -100,6 +106,8 @@ export const HoldingsHistoryChart: React.FC<HoldingsHistoryChartProps> = ({ inst
       ? Array.from(new Set([0, Math.floor((points.length - 1) / 2), points.length - 1]))
       : [];
 
+  if (!matchesDataSourceFilter(source, filter)) return null;
+
   return (
     <Card>
       <div
@@ -110,8 +118,11 @@ export const HoldingsHistoryChart: React.FC<HoldingsHistoryChartProps> = ({ inst
           marginBottom: 8,
         }}
       >
-        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: 16 }}>
-          BTC &amp; ETH holdings value
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: 16 }}>
+            BTC &amp; ETH holdings value
+          </div>
+          <DataSourceTag source={source} />
         </div>
         <div
           style={{
@@ -312,5 +323,3 @@ const TooltipRow: React.FC<{ color: string; label: string; value: string }> = ({
     <strong style={{ color: COLORS.textPrimary, marginLeft: 12 }}>{value}</strong>
   </div>
 );
-
-export default HoldingsHistoryChart;

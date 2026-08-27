@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { apiFetch } from '../utils/api';
+import { DataSource } from '../utils/dataSource';
 
 export const useApi = <T = any,>(endpoint: string, options: { enabled?: boolean } = {}) => {
   const { enabled = true } = options;
   const [data, setData] = useState<T | null>(null);
+  const [source, setSource] = useState<DataSource | null>(null);
   const [loading, setLoading] = useState(enabled);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,6 +19,7 @@ export const useApi = <T = any,>(endpoint: string, options: { enabled?: boolean 
         if (!res.ok) throw new Error('Network response was not ok');
         const json = await res.json();
         setData(json);
+        setSource((res.headers.get('X-Data-Source') as DataSource | null) ?? null);
         setError(null);
       } catch (err) {
         setError('Failed to load data');
@@ -28,5 +31,5 @@ export const useApi = <T = any,>(endpoint: string, options: { enabled?: boolean 
     fetchData();
   }, [endpoint, enabled]);
 
-  return { data, loading, error };
+  return { data, source, loading, error };
 };
