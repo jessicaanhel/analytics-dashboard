@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `python backend/app.py`
 
 Runs backend of application in python 3.13
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/holdings) to view in the browser.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view in the browser.
 
 ### `frontend/npm start`
 
